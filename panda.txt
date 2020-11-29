@@ -1,0 +1,25 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import  SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+
+df=pd.read_csv("heart.csv")
+real_x=df.drop(['target'],axis=1)
+real_y=df['target']
+x_train,x_test,y_train,y_test=train_test_split(real_x ,real_y,test_size= 0.2,random_state= 0 )
+sc=SVC(kernel='rbf' )
+sc.fit(x_train ,y_train )
+print(sc.score(x_test ,y_test ))
+sc=SVC(kernel='poly' )
+sc.fit(x_train ,y_train )
+print(sc.score(x_test ,y_test ))
+sc=SVC(kernel='linear',degree=2 )
+sc.fit(x_train ,y_train )
+print(sc.score(x_test ,y_test ))
+dt=DecisionTreeClassifier(criterion='gini' )
+dt.fit(x_train,y_train)
+print(dt.score(x_test ,y_test ))
+knn = KNeighborsClassifier (weights= 'distance', p= 1, n_neighbors= 25, algorithm= 'brute')
+knn.fit(x_train,y_train)
+print(knn.score(x_test ,y_test ) )
